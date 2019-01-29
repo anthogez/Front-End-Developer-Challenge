@@ -10,17 +10,17 @@ import { environment } from 'src/environments/environment';
 })
 export class SearchService {
 
-	private API_URL = environment.omdbApi;
-	private API_KEY = environment.omdbApiKey;
+	private API_URL = environment.omdbApi.url;
+	private API_KEY = environment.omdbApi.key;
 
 	constructor(private http: HttpClient) { }
 
-	searchMovie(searchTerm: string, pageNumber: string): Observable<Movie> {
+	searchMovie(searchTerm: string, pageNumber: string): Observable<Movie[]> {
 		const params = this.movieSearchParams(searchTerm, pageNumber);
-		return this.http.get<Movie>(`${this.API_URL}/?${params}`);
+		return this.http.get<Movie[]>(`${this.API_URL}/?${params}`);
 	}
 
-	searchMovieDetails(imdbId: string) {
+	searchMovieDetails(imdbId: string): Observable<Movie> {
 		const params = this.movieDetailsParams(imdbId);
 		return this.http.get<Movie>(`${this.API_URL}/?${params}`);
 	}
@@ -40,7 +40,7 @@ export class SearchService {
 		return new HttpParams({
 			fromObject: {
 				apikey: this.API_KEY,
-				i: `[${imdbId}]`
+				i: imdbId
 			}
 		});
 	}

@@ -1,0 +1,19 @@
+<div *ngIf="(movies$ | async)">
+	<div *ngFor=" let movie of movies$ | async; trackBy: trackByFn">
+		<mat-card>
+			<mat-card-header>
+				<div mat-card-avatar></div>
+				<mat-card-title>{{movie?.Title}} - {{movie?.Year}}</mat-card-title>
+				<mat-card-subtitle>{{movie?.Type}} </mat-card-subtitle>
+			</mat-card-header>
+			<img *ngIf="posterIsAvailable(movie?.Poster)" mat-card-image src="{{movie?.Poster}}" alt="" width="93" height="130">
+			<mat-card-content>
+				<a [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}"> Details </a>
+			</mat-card-content>
+			<mat-card-actions>
+				<!-- add router to details -->
+				<!--button mat-button>DETAILS</button-->
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</div>

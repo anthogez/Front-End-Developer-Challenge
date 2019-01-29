@@ -1,7 +1,7 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="movie">
 	<mat-form-field appearance="standard">
 		<mat-label>Search</mat-label>
-		<input matInput placeholder="Find movies.." formControlName="title" required>
+		<input matInput placeholder="Find movies.." formControlName="titleCtrl" required>
 		<mat-hint [class]="hintStyleClass()">{{ showHintMessage() }}</mat-hint>
 	</mat-form-field>
 	<button mat-icon-button type="submit">

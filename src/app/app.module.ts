@@ -9,11 +9,19 @@ import { SearchComponent } from './components/search/search.component';
 import { SearchService } from './shared/services/search.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ContainerComponent } from './components/container/container.component';
+import { StickyToolbarComponent } from './components/sticky-toolbar/sticky-toolbar.component';
+import { MovieDetailsComponent } from './views/movie-details/movie-details.component';
+import { HomeComponent } from './views/home/home.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		SearchComponent
+		SearchComponent,
+		ContainerComponent,
+		StickyToolbarComponent,
+		MovieDetailsComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,

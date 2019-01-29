@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SearchService } from 'src/app/shared/services/search.service';
+import { Router, Params } from '@angular/router';
 @Component({
 	selector: 'search-movie',
 	templateUrl: './search.component.html',
@@ -18,7 +18,7 @@ export class SearchComponent implements OnInit {
 	movie: FormGroup;
 	private submitted: boolean;
 
-	constructor(private searchService: SearchService) { }
+	constructor(private router: Router) { }
 
 	ngOnInit() { this.init(); }
 
@@ -29,19 +29,21 @@ export class SearchComponent implements OnInit {
 
 	private setFormGroup(): void {
 		this.movie = new FormGroup({
-			title: new FormControl('', [Validators.required, Validators.minLength(this.MOVIE_TITLE_MIN_LENGTH)])
+			titleCtrl: new FormControl('', [Validators.required, Validators.minLength(this.MOVIE_TITLE_MIN_LENGTH)])
 		});
 	}
 
 	onSubmit(): void {
 		this.submitted = true;
-		if (this.movie.invalid) {
-			return;
-		}
-		const searchTerm = this.getFormValue('title');
-		this.searchService.searchMovie(searchTerm, '0').subscribe(res => {
-			console.log(res);
-		});
+		if (this.movie.invalid) { return; }
+		this.sendValues();
+	}
+
+	private sendValues() {
+		const searchTerm = this.getFormValue('titleCtrl');
+		const defaultPageNumber = '0';
+		const queryParams: Params = { searchTerm: searchTerm, pageNumber: defaultPageNumber };
+		this.router.navigate(['.'], { queryParams: queryParams });
 	}
 
 	getFormValue(key: string): string {
