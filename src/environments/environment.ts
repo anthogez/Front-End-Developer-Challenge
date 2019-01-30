@@ -4,9 +4,15 @@
 
 export const environment = {
 	production: false,
-	omdbApi: {
-		url: 'http://www.omdbapi.com',
-		key: 'd777cf78'
+	// the config below was created only for demo purpose
+	appSettings: {
+		omdb_api: {
+			url: 'http://www.omdbapi.com',
+			key: 'd777cf78'
+		},
+		images: {
+			not_found: './assets/images/not-found.jpeg'
+		}
 	}
 };
 

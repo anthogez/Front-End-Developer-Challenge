@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment';
 })
 export class SearchService {
 
-	private API_URL = environment.omdbApi.url;
-	private API_KEY = environment.omdbApi.key;
+	private API_URL = environment.appSettings.omdb_api.url;
+	private API_KEY = environment.appSettings.omdb_api.key;
 
 	constructor(private http: HttpClient) { }
 

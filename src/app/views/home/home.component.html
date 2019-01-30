@@ -6,7 +6,8 @@
 				<mat-card-title>{{movie?.Title}} - {{movie?.Year}}</mat-card-title>
 				<mat-card-subtitle>{{movie?.Type}} </mat-card-subtitle>
 			</mat-card-header>
-			<img *ngIf="posterIsAvailable(movie?.Poster)" mat-card-image src="{{movie?.Poster}}" alt="" width="93" height="130">
+			<img mat-card-image src="{{getMoviePoster(movie?.Poster)}}" onError="this.src='./assets/images/not-found.jpeg'" alt=""
+			 width="93" height="130">
 			<mat-card-content>
 				<a [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}"> Details </a>
 			</mat-card-content>

@@ -4,6 +4,7 @@ import { Movie } from 'src/app/shared/interfaces/movie.interface';
 import { SearchService } from 'src/app/shared/services/search.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-home',
@@ -15,12 +16,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 	private readonly onDestroy = new Subject<void>();
 	movies$: Observable<Movie[]>;
 
-	searchTerm: string;
-	pageNumber: string;
-	availableMovies: Movie[];
+	private searchTerm: string;
+	private pageNumber: string;
 
 	private nextPageResponse: boolean;
 	private nextPageResults: Movie[];
+
+	imageNotFoundUrl = environment.appSettings.images.not_found;
 
 	constructor(private searchService: SearchService, private route: ActivatedRoute) { }
 
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	searchMovie(): void {
 		this.route.queryParams.pipe(map(params => {
 			this.pageNumber = '1';
-			this.searchTerm = params['searchTerm'];
+			this.searchTerm = params['searchTerm'] ? params['searchTerm'] : '';
 			this.movies$ = this.searchService.searchMovie(this.searchTerm, this.pageNumber).pipe(map(value => value['Search']));
 			this.prepareNextPageResults();
 		}), takeUntil(this.onDestroy)).subscribe();
@@ -44,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 			.pipe(map(res => {
 				this.nextPageResponse = (res['Response'].toLowerCase() === 'true');
 				this.nextPageResults = this.nextPageResponse ? res['Search'] as Movie[] : [];
-			})).subscribe();
+			}), takeUntil(this.onDestroy)).subscribe();
 	}
 
 	loadMore(currentPageResults: any): void {
@@ -52,7 +54,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.nextPageResults = [];
 		this.prepareNextPageResults();
 	}
-
 
 	isAllowedToLoadMore() {
 		return !this.nextPageResponse;
@@ -62,7 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		return item.id;
 	}
 
-	posterIsAvailable(poster: string) {
-		return poster !== 'N/A';
+	getMoviePoster(imageUrl: string) {
+		return imageUrl === 'N/A' ? this.imageNotFoundUrl : imageUrl;
 	}
 }
