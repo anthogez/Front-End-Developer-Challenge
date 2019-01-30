@@ -13,12 +13,14 @@ import { ActivatedRoute } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
 
 	private readonly onDestroy = new Subject<void>();
-	nothingToLoad: boolean;
 	movies$: Observable<Movie[]>;
 
 	searchTerm: string;
 	pageNumber: string;
 	availableMovies: Movie[];
+
+	private nextPageResponse: boolean;
+	private nextPageResults: Movie[];
 
 	constructor(private searchService: SearchService, private route: ActivatedRoute) { }
 
@@ -36,27 +38,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 		}), takeUntil(this.onDestroy)).subscribe();
 	}
 
-	prepareNextPageResults() {
+	private prepareNextPageResults() {
 		this.pageNumber = (Number(this.pageNumber) + 1).toString();
 		this.searchService.searchMovie(this.searchTerm, this.pageNumber)
-			.pipe(map(value => value)).subscribe(nextPage => {
-
-				const nextPageResponse = nextPage['Response'];
-				const nextPageHaveResults = (nextPageResponse === 'True');
-
-				if (nextPageHaveResults) {
-					const nextPageResults = nextPage['Search'];
-					this.availableMovies = nextPageResults;
-				}
-				this.nothingToLoad = !nextPageHaveResults;
-			});
+			.pipe(map(res => {
+				this.nextPageResponse = (res['Response'].toLowerCase() === 'true');
+				this.nextPageResults = this.nextPageResponse ? res['Search'] as Movie[] : [];
+			})).subscribe();
 	}
 
 	loadMore(currentPageResults: any): void {
-		currentPageResults = currentPageResults.concat(this.availableMovies);
-		this.movies$ = of(currentPageResults);
-		this.availableMovies = [];
+		this.movies$ = of(currentPageResults.concat(this.nextPageResults));
+		this.nextPageResults = [];
 		this.prepareNextPageResults();
+	}
+
+
+	isAllowedToLoadMore() {
+		return !this.nextPageResponse;
 	}
 
 	trackByFn(index, item) {

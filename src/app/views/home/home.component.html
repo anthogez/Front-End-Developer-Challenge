@@ -15,5 +15,5 @@
 			</mat-card-actions>
 		</mat-card>
 	</div>
-	<button mat-button (click)="loadMore(movies)" [disabled]="nothingToLoad">LOAD MORE</button>
+	<button mat-button (click)="loadMore(movies)" [disabled]="isAllowedToLoadMore()">LOAD MORE</button>
 </div>
