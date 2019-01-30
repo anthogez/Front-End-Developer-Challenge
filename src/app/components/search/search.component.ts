@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, Params } from '@angular/router';
 @Component({
@@ -36,13 +36,12 @@ export class SearchComponent implements OnInit {
 	onSubmit(): void {
 		this.submitted = true;
 		if (this.movie.invalid) { return; }
-		this.sendValues();
+		this.setRouterQueryParams();
 	}
 
-	private sendValues() {
+	private setRouterQueryParams() {
 		const searchTerm = this.getFormValue('titleCtrl');
-		const defaultPageNumber = '0';
-		const queryParams: Params = { searchTerm: searchTerm, pageNumber: defaultPageNumber };
+		const queryParams: Params = { searchTerm: searchTerm };
 		this.router.navigate(['.'], { queryParams: queryParams });
 	}
 

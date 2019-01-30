@@ -1,5 +1,5 @@
-<div *ngIf="(movies$ | async)">
-	<div *ngFor=" let movie of movies$ | async; trackBy: trackByFn">
+<div *ngIf="(movies$ | async) as movies;">
+	<div *ngFor="let movie of movies; trackBy: trackByFn;">
 		<mat-card>
 			<mat-card-header>
 				<div mat-card-avatar></div>
@@ -12,8 +12,8 @@
 			</mat-card-content>
 			<mat-card-actions>
 				<!-- add router to details -->
-				<!--button mat-button>DETAILS</button-->
 			</mat-card-actions>
 		</mat-card>
 	</div>
+	<button mat-button (click)="loadMore(movies)" [disabled]="nothingToLoad">LOAD MORE</button>
 </div>

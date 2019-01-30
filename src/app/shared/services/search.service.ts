@@ -15,6 +15,7 @@ export class SearchService {
 
 	constructor(private http: HttpClient) { }
 
+
 	searchMovie(searchTerm: string, pageNumber: string): Observable<Movie[]> {
 		const params = this.movieSearchParams(searchTerm, pageNumber);
 		return this.http.get<Movie[]>(`${this.API_URL}/?${params}`);
@@ -29,9 +30,9 @@ export class SearchService {
 		return new HttpParams({
 			fromObject: {
 				apikey: this.API_KEY,
-				s: `[${searchTerm}]`,
+				s: `${searchTerm}`,
 				type: SearchType.MOVIE,
-				page: `[${pageNumber}]`
+				page: `${pageNumber}`
 			}
 		});
 	}

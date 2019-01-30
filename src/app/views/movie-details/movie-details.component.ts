@@ -25,8 +25,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 	searchMovie(): void {
 		this.route.queryParams.pipe(map(params => {
 			const imdbId = params['i'] ? params['i'] : '';
-			this.movie$ = this.searchService.searchMovieDetails(imdbId).pipe(map(result => result), takeUntil(this.onDestroy));
-		})).subscribe();
+			this.movie$ = this.searchService.searchMovieDetails(imdbId).pipe(map(result => result));
+		}), takeUntil(this.onDestroy)).subscribe();
 	}
 
 	posterIsAvailable(poster: string) {
