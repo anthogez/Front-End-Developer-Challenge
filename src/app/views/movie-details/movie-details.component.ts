@@ -4,6 +4,7 @@ import { Movie } from 'src/app/shared/interfaces/movie.interface';
 import { SearchService } from 'src/app/shared/services/search.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-movie-details',
@@ -13,13 +14,13 @@ import { map, takeUntil } from 'rxjs/operators';
 export class MovieDetailsComponent implements OnInit, OnDestroy {
 
 	private readonly onDestroy = new Subject<void>();
-
 	movie$: Observable<Movie>;
+
+	imageNotFoundUrl = environment.appSettings.images.not_found;
 
 	constructor(private searchService: SearchService, private route: ActivatedRoute) { }
 
 	ngOnInit() { this.searchMovie(); }
-
 	ngOnDestroy() { this.onDestroy.next(); }
 
 	searchMovie(): void {
@@ -29,12 +30,11 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 		}), takeUntil(this.onDestroy)).subscribe();
 	}
 
-	posterIsAvailable(poster: string) {
-		return poster !== 'N/A';
+	getMoviePoster(imageUrl: string) {
+		return imageUrl === 'N/A' ? this.imageNotFoundUrl : imageUrl;
 	}
 
 	trackByFn(index, item) {
 		return item.id;
 	}
-
 }

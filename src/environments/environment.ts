@@ -8,7 +8,8 @@ export const environment = {
 	appSettings: {
 		omdb_api: {
 			url: 'http://www.omdbapi.com',
-			key: 'd777cf78'
+			key: 'd777cf78',
+			default_page_number: '1'
 		},
 		images: {
 			not_found: './assets/images/not-found.jpeg'

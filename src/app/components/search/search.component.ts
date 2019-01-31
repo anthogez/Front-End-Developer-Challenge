@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, Params } from '@angular/router';
+import { HomeComponent } from 'src/app/views/home/home.component';
+import { ManageComponentService } from 'src/app/shared/services/manage-component.service';
 @Component({
 	selector: 'search-movie',
 	templateUrl: './search.component.html',
@@ -12,13 +14,12 @@ export class SearchComponent implements OnInit {
 	// TODO ADD i18n
 	private NORMAL_HINT_MESSAGE = 'Hint: e.g. Kill Bill';
 	private ERROR_HINT_MESSAGE = 'This field requires minimum 3 characters.';
-
 	private MOVIE_TITLE_MIN_LENGTH = 3;
 
 	movie: FormGroup;
 	private submitted: boolean;
 
-	constructor(private router: Router) { }
+	constructor(private router: Router, private manageComponentService: ManageComponentService) { }
 
 	ngOnInit() { this.init(); }
 
@@ -43,6 +44,7 @@ export class SearchComponent implements OnInit {
 		const searchTerm = this.getFormValue('titleCtrl');
 		const queryParams: Params = { searchTerm: searchTerm };
 		this.router.navigate(['.'], { queryParams: queryParams });
+		this.manageComponentService.getComponentByKey('HomeComponent').searchMovie();
 	}
 
 	getFormValue(key: string): string {

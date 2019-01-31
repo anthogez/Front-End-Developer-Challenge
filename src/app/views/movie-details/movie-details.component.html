@@ -1,4 +1,19 @@
-<div *ngIf="(movie$ | async) as movie">
+<div *ngIf="(movie$ | async) as movie" class="distance-from-header">
+
+	<mat-card>
+		<mat-card-header>
+			<div mat-card-avatar></div>
+			<mat-card-title>{{movie?.Title}} - {{movie?.Year}}</mat-card-title>
+			<mat-card-subtitle>{{movie?.Type}} </mat-card-subtitle>
+		</mat-card-header>
+		<img mat-card-image class="showDetails" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}" src="{{getMoviePoster(movie?.Poster)}}"
+		 onError="this.src='./assets/images/not-found.jpeg'" alt="" width="93" height="130">
+		<mat-card-content>
+		</mat-card-content>
+		<mat-card-actions>
+			<!-- add router to details -->
+		</mat-card-actions>
+	</mat-card>
 	{{movie.Title}}
 	{{movie.Year}}
 	{{movie.Rated}}
@@ -12,7 +27,7 @@
 	{{movie.Language}}
 	{{movie.Country}}
 	{{movie.Awars}}
-	{{movie.Poster}}
+	{{getMoviePoster(movie.Poster)}}
 	<!--{{movie.Ratings e.g. Source}}
 	{{movie.Ratings e.g. Value}}-->
 	{{movie.Metascore}}

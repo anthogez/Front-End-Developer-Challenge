@@ -1,4 +1,4 @@
-<div *ngIf="(movies$ | async) as movies;">
+<div *ngIf="(movies$ | async) as movies;" class="distance-from-header">
 	<div *ngFor="let movie of movies; trackBy: trackByFn;">
 		<mat-card>
 			<mat-card-header>
@@ -6,8 +6,10 @@
 				<mat-card-title>{{movie?.Title}} - {{movie?.Year}}</mat-card-title>
 				<mat-card-subtitle>{{movie?.Type}} </mat-card-subtitle>
 			</mat-card-header>
-			<img mat-card-image src="{{getMoviePoster(movie?.Poster)}}" onError="this.src='./assets/images/not-found.jpeg'" alt=""
-			 width="93" height="130">
+		
+				<img mat-card-image class="showDetails" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}" src="{{getMoviePoster(movie?.Poster)}}"
+				 onError="this.src='./assets/images/not-found.jpeg'" alt="" width="93" height="130">
+			
 			<mat-card-content>
 				<a [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}"> Details </a>
 			</mat-card-content>
@@ -16,5 +18,7 @@
 			</mat-card-actions>
 		</mat-card>
 	</div>
-	<button mat-button (click)="loadMore(movies)" [disabled]="isAllowedToLoadMore()">LOAD MORE</button>
+	<div>
+		<button mat-button (click)="loadMore(movies)" [disabled]="isAllowedToLoadMore()">Load More</button>
+	</div>
 </div>

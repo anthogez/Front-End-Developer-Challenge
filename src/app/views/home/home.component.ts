@@ -5,6 +5,7 @@ import { SearchService } from 'src/app/shared/services/search.service';
 import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ManageComponentService } from 'src/app/shared/services/manage-component.service';
 
 @Component({
 	selector: 'app-home',
@@ -24,16 +25,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 	imageNotFoundUrl = environment.appSettings.images.not_found;
 
-	constructor(private searchService: SearchService, private route: ActivatedRoute) { }
+	constructor(private searchService: SearchService,
+		private route: ActivatedRoute, private manageComponentService: ManageComponentService) { }
 
 	ngOnInit() { this.init(); }
+
 	ngOnDestroy() { this.onDestroy.next(); }
 
-	init() { this.searchMovie(); }
+	init() {
+		this.manageComponentService.registerComponent('HomeComponent', this);
+		this.searchMovie();
+	}
 
 	searchMovie(): void {
+		this.nextPageResults = [];
 		this.route.queryParams.pipe(map(params => {
-			this.pageNumber = '1';
+			this.pageNumber = environment.appSettings.omdb_api.default_page_number;
 			this.searchTerm = params['searchTerm'] ? params['searchTerm'] : '';
 			this.movies$ = this.searchService.searchMovie(this.searchTerm, this.pageNumber).pipe(map(value => value['Search']));
 			this.prepareNextPageResults();

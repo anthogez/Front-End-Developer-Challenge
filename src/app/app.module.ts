@@ -13,6 +13,7 @@ import { ContainerComponent } from './components/container/container.component';
 import { StickyToolbarComponent } from './components/sticky-toolbar/sticky-toolbar.component';
 import { MovieDetailsComponent } from './views/movie-details/movie-details.component';
 import { HomeComponent } from './views/home/home.component';
+import { ManageComponentService } from './shared/services/manage-component.service';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,7 @@ import { HomeComponent } from './views/home/home.component';
 		ReactiveFormsModule,
 		HttpClientModule
 	],
-	providers: [SearchService],
+	providers: [SearchService, ManageComponentService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
