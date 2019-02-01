@@ -1,7 +1,31 @@
-.showDetails {
-	cursor: pointer;
+
+:host::ng-deep .mat-card-header-text {
+	margin: 0;
 }
 
-.distance-from-header {
-	margin-top: 200px;
+
+.container {
+	margin-top: 150px;
+
+	.card { 
+		margin-top: 20px;
+		width: 200px; 
+		.movieImage { 
+			cursor: pointer;
+			height: auto;
+			object-fit: contain;
+		}
+		.links {
+			text-decoration: none;
+			color: #136CB2;
+			&:hover {
+				color: rgb(73, 156, 219);;
+			}
+		}
+	}
+	
+	.loadMore {
+		margin: 50px;
+	}
 }
+

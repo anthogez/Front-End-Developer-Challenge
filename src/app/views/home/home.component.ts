@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 		}), takeUntil(this.onDestroy)).subscribe();
 	}
 
-	private prepareNextPageResults() {
+	private prepareNextPageResults(): void {
 		this.pageNumber = (Number(this.pageNumber) + 1).toString();
 		this.searchService.searchMovie(this.searchTerm, this.pageNumber)
 			.pipe(map(res => {
@@ -56,13 +56,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 			}), takeUntil(this.onDestroy)).subscribe();
 	}
 
-	loadMore(currentPageResults: any): void {
+	loadMore(currentPageResults: Movie[]): void {
 		this.movies$ = of(currentPageResults.concat(this.nextPageResults));
 		this.nextPageResults = [];
 		this.prepareNextPageResults();
 	}
 
-	isAllowedToLoadMore() {
+	isAllowedToLoadMore(): boolean {
 		return !this.nextPageResponse;
 	}
 
@@ -70,7 +70,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 		return item.id;
 	}
 
-	getMoviePoster(imageUrl: string) {
+	getMoviePoster(imageUrl: string): string {
+		// TODO handle me properly with exceptions
 		return imageUrl === 'N/A' ? this.imageNotFoundUrl : imageUrl;
 	}
 }

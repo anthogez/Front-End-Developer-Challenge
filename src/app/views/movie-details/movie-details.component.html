@@ -1,42 +1,26 @@
-<div *ngIf="(movie$ | async) as movie" class="distance-from-header">
-
-	<mat-card>
-		<mat-card-header>
-			<div mat-card-avatar></div>
-			<mat-card-title>{{movie?.Title}} - {{movie?.Year}}</mat-card-title>
-			<mat-card-subtitle>{{movie?.Type}} </mat-card-subtitle>
-		</mat-card-header>
-		<img mat-card-image class="showDetails" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}" src="{{getMoviePoster(movie?.Poster)}}"
-		 onError="this.src='./assets/images/not-found.jpeg'" alt="" width="93" height="130">
-		<mat-card-content>
-		</mat-card-content>
-		<mat-card-actions>
-			<!-- add router to details -->
-		</mat-card-actions>
-	</mat-card>
-	{{movie.Title}}
-	{{movie.Year}}
-	{{movie.Rated}}
-	{{movie.Released}}
-	{{movie.Runtime}}
-	{{movie.Genre}}
-	{{movie.Director}}
-	{{movie.Writer}}
-	{{movie.Actors}}
-	{{movie.Plot}}
-	{{movie.Language}}
-	{{movie.Country}}
-	{{movie.Awars}}
-	{{getMoviePoster(movie.Poster)}}
-	<!--{{movie.Ratings e.g. Source}}
-	{{movie.Ratings e.g. Value}}-->
-	{{movie.Metascore}}
-	{{movie.imdbRating}}
-	{{movie.imdbVotes}}
-	<!--{{movie.imdbID}}-->
-	{{movie.Type}}
-	{{movie.DVD}}
-	{{movie.BoxOffice}}
-	{{movie.Production}}
-	{{movie.Website}}
+<div *ngIf="(movie$ | async) as movie;" class="container">
+	<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutAlign="center center">
+		<mat-card fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" class="card mat-elevation-z0">
+			<mat-card-header>
+				<mat-card-title>{{movie?.Title}} ({{movie?.Year}})</mat-card-title>
+				<mat-card-subtitle> {{movie?.Genre}} - {{movie.Runtime}}</mat-card-subtitle>
+			</mat-card-header>
+			<img mat-card-image class="movieImage" alt="img" src="{{getMoviePoster(movie?.Poster)}}" onError="this.src='./assets/images/not-found.jpeg'"
+			 alt="">
+			<mat-card-actions>
+				<a class="links" href="https://www.imdb.com/title/{{movie?.imdbID}}/?ref_=fn_al_tt_1" target="_blank">IMDb</a>
+			</mat-card-actions>
+			<mat-card-content>
+				<p>{{movie?.Plot}}</p>
+				<li>
+					<ul>imdbRating: <b>{{movie.imdbRating}}</b></ul>
+					<ul>imdbVotes: <b>{{movie?.imdbVotes}}</b></ul>
+					<ul>Language: <b>{{movie?.Language}}</b></ul>
+					<ul>Director: <b>{{movie?.Director}}</b></ul>
+					<ul>Writer: <b>{{movie?.Writer}}</b></ul>
+					<ul>Stars: <b>{{movie?.Actors}}</b></ul>
+				</li>
+			</mat-card-content>
+		</mat-card>
+	</div>
 </div>

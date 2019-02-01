@@ -14,6 +14,7 @@ import { StickyToolbarComponent } from './components/sticky-toolbar/sticky-toolb
 import { MovieDetailsComponent } from './views/movie-details/movie-details.component';
 import { HomeComponent } from './views/home/home.component';
 import { ManageComponentService } from './shared/services/manage-component.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { ManageComponentService } from './shared/services/manage-component.servi
 		BrowserAnimationsModule,
 		MaterialModule,
 		ReactiveFormsModule,
-		HttpClientModule
+		HttpClientModule,
+		FlexLayoutModule
 	],
 	providers: [SearchService, ManageComponentService],
 	bootstrap: [AppComponent]

@@ -1,24 +1,24 @@
-<div *ngIf="(movies$ | async) as movies;" class="distance-from-header">
-	<div *ngFor="let movie of movies; trackBy: trackByFn;">
-		<mat-card>
-			<mat-card-header>
-				<div mat-card-avatar></div>
-				<mat-card-title>{{movie?.Title}} - {{movie?.Year}}</mat-card-title>
-				<mat-card-subtitle>{{movie?.Type}} </mat-card-subtitle>
-			</mat-card-header>
-		
-				<img mat-card-image class="showDetails" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}" src="{{getMoviePoster(movie?.Poster)}}"
-				 onError="this.src='./assets/images/not-found.jpeg'" alt="" width="93" height="130">
-			
-			<mat-card-content>
-				<a [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}"> Details </a>
-			</mat-card-content>
-			<mat-card-actions>
-				<!-- add router to details -->
-			</mat-card-actions>
-		</mat-card>
+<div *ngIf="(movies$ | async) as movies;" class="container">
+	<div fxLayout="column wrap" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutAlign="center center">
+		<ng-container *ngFor="let movie of movies; trackBy: trackByFn;">
+			<mat-card fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" class="card mat-elevation-z0">
+				<mat-card-header>
+					<mat-card-title>{{movie?.Title}} ({{movie?.Year}})</mat-card-title>
+					<mat-card-subtitle>Type: {{movie?.Type}}</mat-card-subtitle>
+				</mat-card-header>
+				<img mat-card-image class="movieImage" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}" alt="img"
+				 src="{{getMoviePoster(movie?.Poster)}}" onError="this.src='./assets/images/not-found.jpeg'" alt="">
+				<mat-card-content>
+				</mat-card-content>
+				<mat-card-actions>
+					<a class="links" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}"> Details </a>
+					<!--todo create pipe to sanitize url -->
+					<a class="links" href="https://www.imdb.com/title/{{movie?.imdbID}}/?ref_=fn_al_tt_1" target="_blank">IMDb</a>
+				</mat-card-actions>
+			</mat-card>
+		</ng-container>
 	</div>
-	<div>
-		<button mat-button (click)="loadMore(movies)" [disabled]="isAllowedToLoadMore()">Load More</button>
+	<div fxLayoutAlign="center center" class="loadMore">
+		<button mat-raised-button (click)="loadMore(movies)" [disabled]="isAllowedToLoadMore()">Load More</button>
 	</div>
 </div>
