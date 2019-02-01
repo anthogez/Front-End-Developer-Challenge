@@ -1,3 +1,4 @@
+<!-- TODO make the card below becomes a reusable component -->
 <div *ngIf="(movies$ | async) as movies;" class="container">
 	<div fxLayout="column wrap" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutAlign="center center">
 		<ng-container *ngFor="let movie of movies; trackBy: trackByFn;">
