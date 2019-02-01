@@ -37,13 +37,13 @@ export class SearchComponent implements OnInit {
 		this.submitted = true;
 		if (this.movie.invalid) { return; }
 		this.setRouterQueryParams();
+		this.manageComponentService.getComponentByKey('HomeComponent').searchMovie();
 	}
 
 	private setRouterQueryParams() {
 		const searchTerm = this.getFormValue('titleCtrl');
 		const queryParams: Params = { searchTerm: searchTerm };
 		this.router.navigate(['.'], { queryParams: queryParams });
-		this.manageComponentService.getComponentByKey('HomeComponent').searchMovie();
 	}
 
 	getFormValue(key: string): string {
