@@ -7,14 +7,14 @@
 					<mat-card-title>{{movie?.Title}} ({{movie?.Year}})</mat-card-title>
 					<mat-card-subtitle>Type: {{movie?.Type}}</mat-card-subtitle>
 				</mat-card-header>
-				<img mat-card-image class="movieImage" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}" alt="img"
+				<img mat-card-image class="movieImage" [routerLink]="['/movie-details']" [queryParams]="getQueryParams(movie)" alt="img"
 				 src="{{getMoviePoster(movie?.Poster)}}" onError="this.src='./assets/images/not-found.jpeg'" alt="">
 				<mat-card-content>
 				</mat-card-content>
 				<mat-card-actions>
-					<a class="links" [routerLink]="['/movie-details']" [queryParams]="{i: movie?.imdbID}"> Details </a>
+					<a class="links" [routerLink]="['/movie-details']" [queryParams]="getQueryParams(movie)"> Details </a>
 					<!--todo create pipe to sanitize url -->
-					<a class="links" href="https://www.imdb.com/title/{{movie?.imdbID}}/?ref_=fn_al_tt_1" target="_blank">IMDb</a>
+					<a class="links" href="{{getIMDBUrl(movie)}}" target="_blank">IMDb</a>
 				</mat-card-actions>
 			</mat-card>
 		</ng-container>

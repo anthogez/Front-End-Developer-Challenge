@@ -74,4 +74,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 		// TODO handle me properly with exceptions
 		return imageUrl === 'N/A' ? this.imageNotFoundUrl : imageUrl;
 	}
+
+	// move me to a service
+	getQueryParams(movie: Movie) {
+		return { i: movie.imdbID };
+	}
+
+	// move me to a service/utility
+	getIMDBUrl(movie: Movie) {
+		return `https://www.imdb.com/title/${movie.imdbID}/?ref_=fn_al_tt_1`;
+	}
 }
