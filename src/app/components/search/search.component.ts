@@ -42,8 +42,8 @@ export class SearchComponent implements OnInit {
 
 	private setRouterQueryParams() {
 		const searchTerm = this.getFormValue('titleCtrl');
-		const queryParams: Params = { searchTerm: searchTerm };
-		this.router.navigate(['.'], { queryParams: queryParams });
+		const queryParams: Params = { searchTerm };
+		this.router.navigate(['.'], { queryParams });
 	}
 
 	getFormValue(key: string): string {
